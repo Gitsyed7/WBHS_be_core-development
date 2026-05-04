@@ -8,6 +8,6 @@ namespace WBHealthScheme.Application.Interfaces
 {
     public interface IApiKeyService
     {
-        Task<ApiKey?> GetValidKeyAsync(string apiKey, string endpoint);
+        Task<ApiKey?> GetValidKeyAsync(string apiKey);
     }
 }

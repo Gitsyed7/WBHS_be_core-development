@@ -65,5 +65,6 @@ namespace WBHealthScheme.Application.Services
 
         return sr.ReadToEnd();
     }
+    
     }
 }

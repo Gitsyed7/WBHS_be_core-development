@@ -11,18 +11,17 @@ namespace WBHealthScheme.Infrastructure.Repositories
 {
     public class ApiKeyRepository : IApiKeyRepository
     {
-         private readonly WBHSDbContext _context;
+        private readonly WBHSDbContext _context;
         public ApiKeyRepository(WBHSDbContext context)
         {
             _context = context;
         }
-       public async Task<ApiKey?> GetValidKeyAsync(string apiKey, string endpoint)
-{
-    return await _context.ApiKeys
-        .FirstOrDefaultAsync(x =>
-            x.ApiKeyValue == apiKey &&
-            endpoint.StartsWith(x.EndpointUrl) &&
-            x.IsActive);
-}
+        public async Task<ApiKey?> GetValidKeyAsync(string apiKey)
+        {
+            return await _context.ApiKeys
+                .FirstOrDefaultAsync(x =>
+                    x.ApiKeyValue == apiKey &&
+                    x.IsActive);
+        }
     }
 }

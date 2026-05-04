@@ -10,8 +10,8 @@ public class ApiKeyService : IApiKeyService
         _repository = repository;
     }
 
-    public async Task<ApiKey?> GetValidKeyAsync(string apiKey, string endpoint)
+    public async Task<ApiKey?> GetValidKeyAsync(string apiKey)
 {
-    return await _repository.GetValidKeyAsync(apiKey, endpoint);
+    return await _repository.GetValidKeyAsync(apiKey);
 }
 }

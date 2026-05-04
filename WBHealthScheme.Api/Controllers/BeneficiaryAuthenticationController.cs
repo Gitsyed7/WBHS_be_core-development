@@ -15,7 +15,7 @@ namespace WBHealthScheme.Api.Controllers
         public BeneficiaryAuthenticationController(IBeneficiaryAuthenticationService service)
         {
             _service = service;
-        }        
+        } 
 
         // ------------------------------------------------------
         // API: For University, By Unique ID
@@ -113,6 +113,8 @@ namespace WBHealthScheme.Api.Controllers
             return Ok(ApiResponse<List<AllBeneficiaryAuthenticationResponseByMobileNo>>
                 .Ok(result, "Beneficiary fetched successfully"));
         }
+
+        
 
     }
 }

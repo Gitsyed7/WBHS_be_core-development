@@ -4,21 +4,17 @@ using System.Security.Cryptography;
 using System.Text;
 using WBHealthScheme.Application.Interfaces;
 using WBHealthScheme.Application.Services;
-using WBHealthScheme.Domain.Entities;
 
 public class HmacAuthAttribute : Attribute, IAsyncActionFilter
 {
-    private const string API_KEY_HEADER = "x-api-key";
-    private const string SIGNATURE_HEADER = "x-signature";
-    private const string TIMESTAMP_HEADER = "x-timestamp";
-
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
         var request = context.HttpContext.Request;
 
-        var apiKey = request.Headers[API_KEY_HEADER].ToString();
-        var signature = request.Headers[SIGNATURE_HEADER].ToString();
-        var timestamp = request.Headers[TIMESTAMP_HEADER].ToString();
+        // 🔹 Step 1: Read headers
+        var apiKey = request.Headers["x-api-key"].ToString();
+        var signature = request.Headers["x-signature"].ToString();
+        var timestamp = request.Headers["x-timestamp"].ToString();
 
         if (string.IsNullOrEmpty(apiKey) ||
             string.IsNullOrEmpty(signature) ||
@@ -28,9 +24,15 @@ public class HmacAuthAttribute : Attribute, IAsyncActionFilter
             return;
         }
 
-        var service = context.HttpContext.RequestServices.GetRequiredService<IApiKeyService>();
+        // 🔹 Step 2: Get services
+        var apiKeyService = context.HttpContext.RequestServices
+            .GetRequiredService<IApiKeyService>();
 
-       var apiKeyData = await service.GetValidKeyAsync(apiKey, context.HttpContext.Request.Path);
+        var encryptionService = context.HttpContext.RequestServices
+            .GetRequiredService<EncryptionService>();
+
+        // 🔹 Step 3: Validate API key
+        var apiKeyData = await apiKeyService.GetValidKeyAsync(apiKey);
 
         if (apiKeyData == null)
         {
@@ -38,20 +40,23 @@ public class HmacAuthAttribute : Attribute, IAsyncActionFilter
             return;
         }
 
-        var secret = apiKeyData.ApiSecretEncrypted; 
+        // 🔹 Step 4: Decrypt secret
+        var secret = encryptionService.Decrypt(apiKeyData.ApiSecretEncrypted);
 
+        // 🔹 Step 5: Recreate signature
         var data = $"{request.Method}{request.Path}{timestamp}";
         var serverSignature = GenerateHmac(secret, data);
 
+        // 🔹 Step 6: Compare signature (secure way)
         if (!CryptographicOperations.FixedTimeEquals(
-        Encoding.UTF8.GetBytes(serverSignature),
-        Encoding.UTF8.GetBytes(signature)))
+            Encoding.UTF8.GetBytes(serverSignature),
+            Encoding.UTF8.GetBytes(signature)))
         {
             context.Result = new UnauthorizedObjectResult("Invalid signature");
             return;
         }
 
-        // Timestamp validation
+        // 🔹 Step 7: Validate timestamp (anti-replay)
         var requestTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(timestamp));
         var now = DateTimeOffset.UtcNow;
 
@@ -61,7 +66,8 @@ public class HmacAuthAttribute : Attribute, IAsyncActionFilter
             return;
         }
 
-        await next(); // continue to controller
+        // 🔹 Step 8: Continue to controller
+        await next();
     }
 
     private string GenerateHmac(string secret, string data)
