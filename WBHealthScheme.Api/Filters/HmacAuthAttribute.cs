@@ -11,16 +11,27 @@ public class HmacAuthAttribute : Attribute, IAsyncActionFilter
     {
         var request = context.HttpContext.Request;
 
-        // 🔹 Step 1: Read headers
-        var apiKey = request.Headers["x-api-key"].ToString();
-        var signature = request.Headers["x-signature"].ToString();
-        var timestamp = request.Headers["x-timestamp"].ToString();
-
-        if (string.IsNullOrEmpty(apiKey) ||
-            string.IsNullOrEmpty(signature) ||
-            string.IsNullOrEmpty(timestamp))
+        Console.WriteLine("===== HEADERS =====");
+        foreach (var h in context.HttpContext.Request.Headers)
         {
-            context.Result = new UnauthorizedObjectResult("Missing headers");
+            Console.WriteLine($"{h.Key} = {h.Value}");
+        }
+        Console.WriteLine("===================");
+        
+        // 🔹 Step 1: Read headers
+       if (!request.Headers.TryGetValue("x-api-key", out var apiKey) ||
+            !request.Headers.TryGetValue("x-signature", out var signature) ||
+            !request.Headers.TryGetValue("x-timestamp", out var timestamp))
+        {
+            context.Result = new UnauthorizedObjectResult("Headers not found");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(apiKey) ||
+            string.IsNullOrWhiteSpace(signature) ||
+            string.IsNullOrWhiteSpace(timestamp))
+        {
+            context.Result = new UnauthorizedObjectResult("Headers are empty");
             return;
         }
 
