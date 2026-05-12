@@ -25,6 +25,8 @@ public class WBHSDbContext : DbContext
     public DbSet<UnivOfficeDetails> UnivOfficeDetails { get; set; }
     public DbSet<UnivfamilyDetails> UnivfamilyDetails { get; set; }
     public DbSet<WbhsFamilyPhotoSignature> WbhsFamilyPhotoSignatures { get; set; }
+    public DbSet<ApiKey> ApiKeys { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -369,7 +371,34 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.AdharNo).HasColumnName("Adhar_No").HasMaxLength(20);
         });
 
-        
+
+       modelBuilder.Entity<ApiKey>(entity =>
+    {
+        entity.ToTable("API_KEYS");
+
+        entity.Property(e => e.Id).HasColumnName("id");
+
+        entity.Property(e => e.EndpointUrl)
+            .HasColumnName("endpoint_url");
+
+        entity.Property(e => e.AuthHeaderName)
+            .HasColumnName("auth_header_name");
+
+        entity.Property(e => e.IsActive)
+            .HasColumnName("is_active");
+
+        entity.Property(e => e.CreatedAt)
+            .HasColumnName("created_at");
+
+        entity.Property(e => e.UpdatedAt)
+            .HasColumnName("updated_at");
+
+        entity.Property(e => e.ApiKeyValue)
+            .HasColumnName("api_key");
+
+        entity.Property(e => e.ApiSecretEncrypted)
+            .HasColumnName("api_secret_encrypted");
+    }); 
 
     }
 }
