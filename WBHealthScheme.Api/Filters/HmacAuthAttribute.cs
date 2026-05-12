@@ -9,14 +9,7 @@ public class HmacAuthAttribute : Attribute, IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        var request = context.HttpContext.Request;
-
-        Console.WriteLine("===== HEADERS =====");
-        foreach (var h in context.HttpContext.Request.Headers)
-        {
-            Console.WriteLine($"{h.Key} = {h.Value}");
-        }
-        Console.WriteLine("===================");
+        var request = context.HttpContext.Request;       
         
         // 🔹 Step 1: Read headers
        if (!request.Headers.TryGetValue("x-api-key", out var apiKey) ||
@@ -43,6 +36,10 @@ public class HmacAuthAttribute : Attribute, IAsyncActionFilter
             .GetRequiredService<EncryptionService>();
 
         // 🔹 Step 3: Validate API key
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            throw new Exception("API key is missing");
+        }
         var apiKeyData = await apiKeyService.GetValidKeyAsync(apiKey);
 
         if (apiKeyData == null)
