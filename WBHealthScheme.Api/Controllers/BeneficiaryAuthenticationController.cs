@@ -91,12 +91,12 @@ namespace WBHealthScheme.Api.Controllers
         // API: For Govt Employee Pensioner, By Application ID
         // ------------------------------------------------------
         [HmacAuth]
-        [HttpGet("govtEmpPen/{appId}")]
+        [HttpGet("govtEmpPen/{*appId}")]
         public async Task<IActionResult> GetbyAppliID(string appId)
         {
-            var result = await _service.GetBeneficiaryEmpPenByAppIdAsync(appId);
+            var result = await _service.GetBeneficiaryGovtEmpPenByAppIdAsync(appId);
 
-            return Ok(ApiResponse<List<EmpPenBeneficiaryAuthenticationResponse>>
+            return Ok(ApiResponse<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
             .Ok(result, "Enrollment fetched successfully"));
         }
       

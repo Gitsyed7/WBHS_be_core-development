@@ -48,13 +48,13 @@ namespace WBHealthScheme.Application.Services
         GetWardByAppIdAsync(string hrmsId)
         {
             if (string.IsNullOrWhiteSpace(hrmsId))
-                throw new BusinessRuleException("Enrollment ID is required");
+                throw new BusinessRuleException("HRMS ID is required");
             if (hrmsId.Length != 10 || !hrmsId.All(char.IsDigit))
                 throw new BusinessRuleException("Invalid Hrms ID");
             var result = await
             _repository.GetWardByAppIdAsync(hrmsId);
             if (result == null || !result.Any())
-                throw new NotFoundException("Enrollment ID not found");
+                throw new NotFoundException("HRMS ID not found");
             return result;
         }
         
@@ -164,27 +164,27 @@ namespace WBHealthScheme.Application.Services
     /// Retrieves govt. employee pensioner beneficiary authentication details using the provided Application ID
     /// after validating its format.
     /// </summary>
-    /// <param name="appliId">Unique identifier of the beneficiary</param>
+    /// <param name="appId">Unique identifier of the beneficiary</param>
     /// <returns>
-    /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+    /// A list of GovtPenBeneficiaryAuthenticationResponse containing beneficiary details
     /// </returns>  
-        public async Task<List<EmpPenBeneficiaryAuthenticationResponse>>
-        GetBeneficiaryEmpPenByAppIdAsync(string appliId)
+        public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryGovtEmpPenByAppIdAsync(string appId)
         {
-            if (string.IsNullOrWhiteSpace(appliId))
+            if (string.IsNullOrWhiteSpace(appId))
                 throw new BusinessRuleException("App ID is required");
-            appliId = Uri.UnescapeDataString(appliId);
-            if (appliId.Length != 19
-                || appliId[2] != '/'
-                || appliId[6] != '/'
-                || appliId[9] != '/'
-                || !appliId.Substring(0, 2).All(char.IsLetter)
-                || !appliId.Substring(3, 3).All(char.IsLetter)
-                || !appliId.Substring(7, 2).All(char.IsDigit)
-                || !appliId.Substring(10, 9).All(char.IsDigit))
-                throw new BusinessRuleException("Invalid App ID"); 
+            appId = Uri.UnescapeDataString(appId);
+            if (appId.Length != 19
+                || appId[2] != '/'
+                || appId[6] != '/'
+                || appId[9] != '/'
+                || !appId.Substring(0, 2).All(char.IsLetter)
+                || !appId.Substring(3, 3).All(char.IsLetter)
+                || !appId.Substring(7, 2).All(char.IsDigit)
+                || !appId.Substring(10, 9).All(char.IsDigit))
+                throw new BusinessRuleException("Invalid Application ID"); 
             var result = await
-                _repository.GetBeneficiaryEmpPenByAppIdAsync(appliId);
+                _repository.GetBeneficiaryGovtEmpPenByAppIdAsync(appId);
             if (result == null || !result.Any())
                 throw new NotFoundException("Beneficiary not found");
             return result;
@@ -211,5 +211,6 @@ namespace WBHealthScheme.Application.Services
                 throw new NotFoundException("Beneficiary not found");
             return result;
         }
+        
     }
 }

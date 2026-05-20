@@ -9,8 +9,6 @@ namespace WBHealthScheme.Application.Dtos
         public string Age { get; set; }
         public string? IdNo { get; set; }
         public string Relation { get; set; }
-        public string PhotoFtp { get; set; }
-        public string SignFtp { get; set; }
         public string RegistrationStatus { get; set; }
         public string WordName { get; set; }
         public string WordTmc { get; set; }
