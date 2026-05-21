@@ -42,17 +42,17 @@ namespace WBHealthScheme.Application.Services
     /// </summary>
     /// <param name="hrmsId">Unique identifier of the beneficiary</param>
     /// <returns>
-    /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+    /// A list of GovtEmpPenBeneficiaryAuthenticationResponse containing beneficiary details
     /// </returns>
-        public async Task<List<BeneficiaryWardRespBroto>>
-        GetWardByAppIdAsync(string hrmsId)
+        public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string hrmsId)
         {
             if (string.IsNullOrWhiteSpace(hrmsId))
                 throw new BusinessRuleException("HRMS ID is required");
             if (hrmsId.Length != 10 || !hrmsId.All(char.IsDigit))
                 throw new BusinessRuleException("Invalid Hrms ID");
             var result = await
-            _repository.GetWardByAppIdAsync(hrmsId);
+            _repository.GetBeneficiaryByHrmsIdGovtAsync(hrmsId);
             if (result == null || !result.Any())
                 throw new NotFoundException("HRMS ID not found");
             return result;

@@ -36,12 +36,12 @@ namespace WBHealthScheme.Api.Controllers
         // ------------------------------------------------------
         
         [HttpGet("govtemp/{hrmsId}")]
-        public async Task<IActionResult> GetwardByappid(string hrmsid)
+        public async Task<IActionResult> GetByHrmsIdGovt(string hrmsId)
         {
             var result = await
-            _service.GetWardByAppIdAsync(hrmsid);
+            _service.GetBeneficiaryByHrmsIdGovtAsync(hrmsId);
 
-            return Ok(ApiResponse<List<BeneficiaryWardRespBroto>>
+            return Ok(ApiResponse<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
             .Ok(result, "Enrollment fetched successfully")); 
         }
 

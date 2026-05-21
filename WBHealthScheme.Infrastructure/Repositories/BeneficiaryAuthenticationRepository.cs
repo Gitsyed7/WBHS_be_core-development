@@ -20,15 +20,13 @@ namespace WBHealthScheme.Infrastructure.Repositories
         // For Authentication: Govt Emplyee, By HRMS ID
         // ------------------------------------------------------
 
-        public async Task<List<BeneficiaryWardRespBroto>>
-        GetWardByAppIdAsync(string app_ID)
-        {            
-            var param = new SqlParameter("@hrmsId", app_ID);
-            var result = await _context.BenefWardDetails
-                        .FromSqlRaw("EXEC GET_WBHS_BENEFICIARY_HRMSID @hrmsId", param)
-                        .AsNoTracking()
-                        .ToListAsync();
-            return result;    
+        public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string HrmsId)
+        {   
+            return await _context.Set<GovtEmpPenBeneficiaryAuthenticationResponse>()
+        .FromSqlRaw("EXEC GetGovtEmpBeneficiaryAuthenticationByHrmsID @hrmsId",
+            new SqlParameter("@hrmsId", HrmsId))
+        .ToListAsync(); 
         }
 
         // ------------------------------------------------------

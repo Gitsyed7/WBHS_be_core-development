@@ -10,13 +10,13 @@ namespace WBHealthScheme.Application.Interfaces
         /// <summary>
         /// Retrieves ward details associated with the provided application ID.
         /// </summary>
-        /// <param name="app_ID">Application identifier</param>
+        /// <param name="HrmsId">HRMS identifier</param>
         /// <returns>
         /// A list of BeneficiaryWardRespBroto containing ward details
         /// </returns>
-        /// <exception cref="ArgumentException">Thrown when app_ID is null or empty</exception>
-        Task<List<BeneficiaryWardRespBroto>>
-        GetWardByAppIdAsync(string app_ID);
+        /// <exception cref="ArgumentException">Thrown when HrmsId is null or empty</exception>
+      Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string HrmsId);
 
         /// <summary>
         /// Retrieves beneficiary authentication details using the provided unique ID.
