@@ -11,9 +11,9 @@ namespace WBHealthScheme.Application.Dtos
         public string? IdNo { get; set; }
         public string Relation { get; set; }
         public string RegistrationStatus { get; set; }
-        public string WordName { get; set; }
-        public string WordTmc { get; set; }
-        public string WordGpb { get; set; }
+        public string WardName { get; set; }
+        public string WardTmc { get; set; }
+        public string WardGpb { get; set; }
         public string? EffectDate { get; set; }        
     }
 
