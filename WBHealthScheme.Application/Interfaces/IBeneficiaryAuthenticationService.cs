@@ -15,8 +15,8 @@ namespace WBHealthScheme.Application.Interfaces
         /// A list of BeneficiaryWardRespBroto containing ward details
         /// </returns>
         /// <exception cref="ArgumentException">Thrown when app_ID is null or empty</exception>
-        Task<List<BeneficiaryWardRespBroto>>
-        GetWardByAppIdAsync(string app_ID);
+        Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string app_ID);
 
         /// <summary>
         /// Retrieves beneficiary authentication details using the provided unique ID.
@@ -65,14 +65,14 @@ namespace WBHealthScheme.Application.Interfaces
         /// <summary>
         /// Retrieves employee pension beneficiary authentication details using the provided application ID.
         /// </summary>
-        /// <param name="appliId">Application identifier of the beneficiary</param>
+        /// <param name="appId">Application identifier of the beneficiary</param>
         /// <returns>
-        /// A list of EmpPenBeneficiaryAuthenticationResponse containing beneficiary details
+        /// A list of GovtEmpPenBeneficiaryAuthenticationResponse containing beneficiary details
         /// </returns>
-        /// <exception cref="ArgumentException">Thrown when appliId is null or empty</exception>
-        Task<List<EmpPenBeneficiaryAuthenticationResponse>>
-        GetBeneficiaryEmpPenByAppIdAsync(string appliId);
-
+        /// <exception cref="ArgumentException">Thrown when appId is null or empty</exception>
+        Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryGovtEmpPenByAppIdAsync(string appId);
+      
         /// <summary>
         /// Retrieves all beneficiary authentication details associated with the provided mobile number.
         /// </summary>

@@ -36,12 +36,12 @@ namespace WBHealthScheme.Api.Controllers
         // ------------------------------------------------------
         
         [HttpGet("govtemp/{hrmsId}")]
-        public async Task<IActionResult> GetwardByappid(string hrmsid)
+        public async Task<IActionResult> GetByHrmsIdGovt(string hrmsId)
         {
             var result = await
-            _service.GetWardByAppIdAsync(hrmsid);
+            _service.GetBeneficiaryByHrmsIdGovtAsync(hrmsId);
 
-            return Ok(ApiResponse<List<BeneficiaryWardRespBroto>>
+            return Ok(ApiResponse<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
             .Ok(result, "Enrollment fetched successfully")); 
         }
 
@@ -91,12 +91,12 @@ namespace WBHealthScheme.Api.Controllers
         // API: For Govt Employee Pensioner, By Application ID
         // ------------------------------------------------------
         [HmacAuth]
-        [HttpGet("govtEmpPen/{appId}")]
+        [HttpGet("govtEmpPen/{*appId}")]
         public async Task<IActionResult> GetbyAppliID(string appId)
         {
-            var result = await _service.GetBeneficiaryEmpPenByAppIdAsync(appId);
+            var result = await _service.GetBeneficiaryGovtEmpPenByAppIdAsync(appId);
 
-            return Ok(ApiResponse<List<EmpPenBeneficiaryAuthenticationResponse>>
+            return Ok(ApiResponse<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
             .Ok(result, "Enrollment fetched successfully"));
         }
       

@@ -10,13 +10,13 @@ namespace WBHealthScheme.Application.Interfaces
         /// <summary>
         /// Retrieves ward details associated with the provided application ID.
         /// </summary>
-        /// <param name="app_ID">Application identifier</param>
+        /// <param name="HrmsId">HRMS identifier</param>
         /// <returns>
         /// A list of BeneficiaryWardRespBroto containing ward details
         /// </returns>
-        /// <exception cref="ArgumentException">Thrown when app_ID is null or empty</exception>
-        Task<List<BeneficiaryWardRespBroto>>
-        GetWardByAppIdAsync(string app_ID);
+        /// <exception cref="ArgumentException">Thrown when HrmsId is null or empty</exception>
+      Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string HrmsId);
 
         /// <summary>
         /// Retrieves beneficiary authentication details using the provided unique ID.
@@ -69,14 +69,14 @@ namespace WBHealthScheme.Application.Interfaces
         /// <summary>
         /// Retrieves employee pension beneficiary authentication details using the provided application ID.
         /// </summary>
-        /// <param name="appliId">Application identifier of the beneficiary</param>
+        /// <param name="appId">Application identifier of the beneficiary</param>
         /// <returns>
         /// A list of EmpPenBeneficiaryAuthenticationResponse containing beneficiary details
         /// </returns>
-        /// <exception cref="ArgumentException">Thrown when appliId is null or empty</exception>
+        /// <exception cref="ArgumentException">Thrown when appId is null or empty</exception>
 
-        Task<List<EmpPenBeneficiaryAuthenticationResponse>>
-        GetBeneficiaryEmpPenByAppIdAsync(string appliId);
+        Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryGovtEmpPenByAppIdAsync(string appId);
 
         /// <summary>
         /// Retrieves all beneficiary authentication details associated with the provided mobile number.

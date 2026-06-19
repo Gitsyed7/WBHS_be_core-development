@@ -20,15 +20,13 @@ namespace WBHealthScheme.Infrastructure.Repositories
         // For Authentication: Govt Emplyee, By HRMS ID
         // ------------------------------------------------------
 
-        public async Task<List<BeneficiaryWardRespBroto>>
-        GetWardByAppIdAsync(string app_ID)
-        {            
-            var param = new SqlParameter("@BEN_HRMS_D", app_ID);
-            var result = await _context.BenefWardDetails
-                        .FromSqlRaw("EXEC GET_WBHS_BENEFICIARY_HRMSID @BEN_HRMS_D", param)
-                        .AsNoTracking()
-                        .ToListAsync();
-            return result;    
+        public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string HrmsId)
+        {   
+            return await _context.Set<GovtEmpPenBeneficiaryAuthenticationResponse>()
+        .FromSqlRaw("EXEC GetGovtEmpBeneficiaryAuthenticationByHrmsID @hrmsId",
+            new SqlParameter("@hrmsId", HrmsId))
+        .ToListAsync(); 
         }
 
         // ------------------------------------------------------
@@ -87,16 +85,13 @@ namespace WBHealthScheme.Infrastructure.Repositories
         // For Authentication: Govt Emplyee Pensioner, By Application ID
         // ------------------------------------------------------
         
-        public async Task<List<EmpPenBeneficiaryAuthenticationResponse>>
-        GetBeneficiaryEmpPenByAppIdAsync(string appId)
+       public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>> 
+        GetBeneficiaryGovtEmpPenByAppIdAsync(string appId)
         {
-            var param = new SqlParameter("@APPID", appId);
-            var result = await _context.EmpPenBeneficiaryFetchAppid
-                        .FromSqlRaw("EXEC GET_WBHS_BENEFICIARY_APP @APPID", param)
-                        .AsNoTracking()
-                        .ToListAsync();
-            return result;
-
+             return await _context.Set<GovtEmpPenBeneficiaryAuthenticationResponse>()
+        .FromSqlRaw("EXEC GetGovtEmpPenBeneficiaryAuthenticationByAppId @appId",
+            new SqlParameter("@appId", appId))
+        .ToListAsync();
         }
 
         // ------------------------------------------------------
@@ -110,6 +105,8 @@ namespace WBHealthScheme.Infrastructure.Repositories
         .FromSqlRaw("EXEC GetAllBeneficiaryAuthenticationByMobileNumber @mobileNo",
             new SqlParameter("@mobileNo", mobNumber))
         .ToListAsync();
-        }  
+        }
+
+        
     }
 }

@@ -12,7 +12,7 @@ public class WBHSDbContext : DbContext
     public DbSet<BeneficiaryWardRespBroto> BenefWardDetails { get; set; }
     
     public DbSet<ReturnRatelistResponse> CodeDetails { get; set; }
-    public DbSet<EmpPenBeneficiaryAuthenticationResponse> EmpPenBeneficiaryFetchAppid { get; set; }
+    public DbSet<GovtEmpPenBeneficiaryAuthenticationResponse> GovtEmpPenBeneficiaryFetchAppid { get; set; }
     public DbSet<WbhsApplicationIdEmpOnline> EmployeeApplications => Set<WbhsApplicationIdEmpOnline>();
     public DbSet<EmployeeBasicInfo> EmployeeBasicInfos => Set<EmployeeBasicInfo>();
     public DbSet<EmployeeOfficeLink> EmployeeOfficeLinks => Set<EmployeeOfficeLink>();
@@ -26,14 +26,14 @@ public class WBHSDbContext : DbContext
     public DbSet<UnivfamilyDetails> UnivfamilyDetails { get; set; }
     public DbSet<WbhsFamilyPhotoSignature> WbhsFamilyPhotoSignatures { get; set; }
     public DbSet<ApiKey> ApiKeys { get; set; }
-
+    public object GovtPenBeneficiaryFetchAppid { get; internal set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<BeneficiaryWardRespBroto>().HasNoKey();
         modelBuilder.Entity<ReturnRatelistResponse>().HasNoKey();
-        modelBuilder.Entity<EmpPenBeneficiaryAuthenticationResponse>().HasNoKey();
+        modelBuilder.Entity<GovtEmpPenBeneficiaryAuthenticationResponse>().HasNoKey();
         modelBuilder.Entity<UnivBeneficiaryAuthenticationResponse>().HasNoKey();
         modelBuilder.Entity<ClgBeneficiaryAuthenticationResponse>().HasNoKey();
         modelBuilder.Entity<PnhytEmpBeneficiaryAuthenticationResponse>().HasNoKey();
