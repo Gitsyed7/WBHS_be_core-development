@@ -17,11 +17,11 @@ namespace WBHealthScheme.Api.Controllers
             _service = service;
         }
 
-        [HttpGet("RATENAME/{Description}")]
+        [HttpGet("rateName/{description}")]
 
-        public async Task<IActionResult> GetRatelistByName(string Description)
+        public async Task<IActionResult> GetRatelistByName(string description)
         {
-            var result = await _service.GetRatelistByNameAsync(Description);
+            var result = await _service.GetRatelistByNameAsync(description);
 
             return Ok(ApiResponse<List<ReturnRatelistResponse>>.Ok(result, "Details Fetched Successfully"));
         }

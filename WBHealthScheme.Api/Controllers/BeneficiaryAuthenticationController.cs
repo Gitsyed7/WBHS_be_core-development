@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using WBHealthScheme.Application.dtos;
 using WBHealthScheme.Application.Dtos;
 using WBHealthScheme.Application.Interfaces;
 using WBHealthScheme.Domain.Common;
 namespace WBHealthScheme.Api.Controllers
 {
+    [HmacAuth]
     [ApiController]
     [Route("api/v1/beneficiary-auth")]
     public class BeneficiaryAuthenticationController : ControllerBase
@@ -13,25 +15,12 @@ namespace WBHealthScheme.Api.Controllers
         public BeneficiaryAuthenticationController(IBeneficiaryAuthenticationService service)
         {
             _service = service;
-        }
-        [HttpGet("mobile/{mobileNumber}")]
-        public async Task<IActionResult> GetByMobile(string mobileNumber)
-        {
-            var result = await
-            _service.GetBeneficiaryByMobileAsync(mobileNumber);
+        } 
 
-            //return Ok(new ApiResponse<List<BeneficiaryAuthenticationResponse>>
-            //{
-            //    Success = true,
-            //    Message = "Beneficiary fetched successfully",
-            //    Status = "200",
-            //    Data = result,
-            //    Errors = null
-            //});
-            return Ok(ApiResponse<List<BeneficiaryAuthenticationResponse>>
-                .Ok(result, "Beneficiary fetched successfully"));
-        }
-
+        // ------------------------------------------------------
+        // API: For University, By Unique ID
+        // ------------------------------------------------------
+      
         [HttpGet("univ/{uniqueId}")]
         public async Task<IActionResult> GetByUniqueId(string uniqueId)
         {
@@ -42,17 +31,24 @@ namespace WBHealthScheme.Api.Controllers
                 .Ok(result, "Beneficiary fetched successfully"));
         }
 
-        [HttpGet("APPID/{enrollmentid}")]
-        public async Task<IActionResult> GetwardByappid(string enrollmentid)
-        {
-        var result = await
-        _service.GetwardByappAsync(enrollmentid);
-
-        return Ok(ApiResponse<List<Beneiciary_ward_resp_broto>>
-        .Ok(result, "Enrollment fetched successfully"));
+        // ------------------------------------------------------
+        // API: For Govt. Emplyee, By HRMS ID
+        // ------------------------------------------------------
         
+        [HttpGet("govtemp/{hrmsId}")]
+        public async Task<IActionResult> GetByHrmsIdGovt(string hrmsId)
+        {
+            var result = await
+            _service.GetBeneficiaryByHrmsIdGovtAsync(hrmsId);
+
+            return Ok(ApiResponse<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+            .Ok(result, "Enrollment fetched successfully")); 
         }
 
+        // ------------------------------------------------------
+        // API: For Collage, By HRMS ID
+        // ------------------------------------------------------
+     
         [HttpGet("clg/{hrmsId}")]
         public async Task<IActionResult> GetByHrmsId(string hrmsId)
         {
@@ -63,6 +59,10 @@ namespace WBHealthScheme.Api.Controllers
                 .Ok(result, "Beneficiary fetched successfully"));
         }
 
+        // ------------------------------------------------------
+        // API: For Panchayat Employee, By IOSMS ID
+        // ------------------------------------------------------
+        [HmacAuth]
         [HttpGet("pnhytEmp/{iosmsId}")]
         public async Task<IActionResult> GetByIosmsId(string iosmsId)
         {
@@ -73,6 +73,10 @@ namespace WBHealthScheme.Api.Controllers
                 .Ok(result, "Beneficiary fetched successfully"));
         }
 
+        // ------------------------------------------------------
+        // API: For Panchayat Pensioner, By Application ID
+        // ------------------------------------------------------
+        [HmacAuth]
         [HttpGet("pnhytPen/{*appId}")]
         public async Task<IActionResult> GetByPnhytPenAppId(string appId)
         {
@@ -82,5 +86,35 @@ namespace WBHealthScheme.Api.Controllers
             return Ok(ApiResponse<List<PnhytPenBeneficiaryAuthenticationResponse>>
                 .Ok(result, "Beneficiary fetched successfully"));
         }
+
+        // ------------------------------------------------------
+        // API: For Govt Employee Pensioner, By Application ID
+        // ------------------------------------------------------
+        [HmacAuth]
+        [HttpGet("govtEmpPen/{*appId}")]
+        public async Task<IActionResult> GetbyAppliID(string appId)
+        {
+            var result = await _service.GetBeneficiaryGovtEmpPenByAppIdAsync(appId);
+
+            return Ok(ApiResponse<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+            .Ok(result, "Enrollment fetched successfully"));
+        }
+      
+        // ------------------------------------------------------
+        // API: For All Enrolled User, By Mobile No.
+        // ------------------------------------------------------
+        [HmacAuth]
+        [HttpGet("mobile-Number/{mobileNumber}")]
+        public async Task<IActionResult> GetByMobileAll(string mobileNumber)
+        {
+            var result = await
+            _service.GetAllBeneficiaryByMobileAsync(mobileNumber);
+            
+            return Ok(ApiResponse<List<AllBeneficiaryAuthenticationResponseByMobileNo>>
+                .Ok(result, "Beneficiary fetched successfully"));
+        }
+
+        
+
     }
 }

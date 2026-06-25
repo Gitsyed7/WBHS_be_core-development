@@ -1,19 +1,29 @@
-﻿using WBHealthScheme.Application.Dtos;
+﻿using WBHealthScheme.Application.dtos;
+using WBHealthScheme.Application.Dtos;
 using WBHealthScheme.Application.Exceptions;
 using WBHealthScheme.Application.Interfaces;
 namespace WBHealthScheme.Application.Services
 {
+    /// <summary>
+    /// Provides business logic for beneficiary authentication operations.
+    /// </summary>
     public class BeneficiaryAuthenticationService :
     IBeneficiaryAuthenticationService
     {
         private readonly IBeneficiaryAuthenticationRepository _repository;
-        public
-        BeneficiaryAuthenticationService(IBeneficiaryAuthenticationRepository
-        repository)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BeneficiaryAuthenticationService"/> class.
+        /// </summary>
+        /// <param name="repository">
+        /// Repository used to access beneficiary authentication data.
+        /// </param>
+        public BeneficiaryAuthenticationService(IBeneficiaryAuthenticationRepository repository)
         {
             _repository = repository;
         }
-        public async Task<List<BeneficiaryAuthenticationResponse>>
+
+        /*public async Task<List<BeneficiaryAuthenticationResponse>>
         GetBeneficiaryByMobileAsync(string mobileNumber)
         {
             if (string.IsNullOrWhiteSpace(mobileNumber))
@@ -25,21 +35,38 @@ namespace WBHealthScheme.Application.Services
             if (result == null || !result.Any())
                 throw new NotFoundException("Beneficiary not found");
             return result;
-        }
-         public async Task<List<Beneiciary_ward_resp_broto>>
-        GetwardByappAsync(string app_ID)
+        }*/
+
+    /// <summary>
+    /// Retrieves govt emplyee authentication details using the provided Hrms ID
+    /// </summary>
+    /// <param name="hrmsId">Unique identifier of the beneficiary</param>
+    /// <returns>
+    /// A list of GovtEmpPenBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>
+        public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string hrmsId)
         {
-            if (string.IsNullOrWhiteSpace(app_ID))
-            throw new BusinessRuleException("Enrollment ID is required");
-            if (app_ID.Length != 10 || !app_ID.All(char.IsDigit))
-            throw new BusinessRuleException("Invalid Enrollment ID");
+            if (string.IsNullOrWhiteSpace(hrmsId))
+                throw new BusinessRuleException("HRMS ID is required");
+            if (hrmsId.Length != 10 || !hrmsId.All(char.IsDigit))
+                throw new BusinessRuleException("Invalid Hrms ID");
             var result = await
-            _repository.GetwardByappAsync(app_ID);
+            _repository.GetBeneficiaryByHrmsIdGovtAsync(hrmsId);
             if (result == null || !result.Any())
-            throw new NotFoundException("Enrollment ID not found");
+                throw new NotFoundException("HRMS ID not found");
             return result;
         }
         
+
+    /// <summary>
+    /// Retrieves university beneficiary authentication details using the provided unique ID
+    /// after validating its format.
+    /// </summary>
+    /// <param name="uniqueId">Unique identifier of the beneficiary</param>
+    /// <returns>
+    /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>         
         public async Task<List<UnivBeneficiaryAuthenticationResponse>>
         GetBeneficiaryByUniqueIdAsync(string uniqueId)
         {
@@ -55,9 +82,16 @@ namespace WBHealthScheme.Application.Services
             if (result == null || !result.Any())
                 throw new NotFoundException("Beneficiary not found");
             return result;
-        } 
-        
-
+        }        
+      
+    /// <summary>
+    /// Retrieves collage beneficiary authentication details using the provided Hrms ID
+    /// after validating its format.
+    /// </summary>
+    /// <param name="hrmsId">Unique identifier of the beneficiary</param>
+    /// <returns>
+    /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>        
         public async Task<List<ClgBeneficiaryAuthenticationResponse>>
         GetBeneficiaryByHrmsIdClgAsync(string hrmsId)
         {
@@ -74,6 +108,14 @@ namespace WBHealthScheme.Application.Services
             return result;
         }
 
+    /// <summary>
+    /// Retrieves panchayat employee beneficiary authentication details using the provided IOSMS ID
+    /// after validating its format.
+    /// </summary>
+    /// <param name="iosmsId">Unique identifier of the beneficiary</param>
+    /// <returns>
+    /// A list of PnhytEmpBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>
         public async Task<List<PnhytEmpBeneficiaryAuthenticationResponse>>
         GetBeneficiaryByIosmsIdAsync(string iosmsId)
         {
@@ -90,6 +132,14 @@ namespace WBHealthScheme.Application.Services
             return result;
         }
 
+    /// <summary>
+    /// Retrieves panchayat pensioner beneficiary authentication details using the provided Application ID
+    /// after validating its format.
+    /// </summary>
+    /// <param name="appId">Unique identifier of the beneficiary</param>
+    /// <returns>
+    /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>  
         public async Task<List<PnhytPenBeneficiaryAuthenticationResponse>>
         GetBeneficiaryPnhytPenByAppIdAsync(string appId)
         {
@@ -108,7 +158,59 @@ namespace WBHealthScheme.Application.Services
             if (result == null || !result.Any())
                 throw new NotFoundException("Beneficiary not found");
             return result;
-        }          
+        }
+
+    /// <summary>
+    /// Retrieves govt. employee pensioner beneficiary authentication details using the provided Application ID
+    /// after validating its format.
+    /// </summary>
+    /// <param name="appId">Unique identifier of the beneficiary</param>
+    /// <returns>
+    /// A list of GovtPenBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>  
+        public async Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryGovtEmpPenByAppIdAsync(string appId)
+        {
+            if (string.IsNullOrWhiteSpace(appId))
+                throw new BusinessRuleException("App ID is required");
+            appId = Uri.UnescapeDataString(appId);
+            if (appId.Length != 19
+                || appId[2] != '/'
+                || appId[6] != '/'
+                || appId[9] != '/'
+                || !appId.Substring(0, 2).All(char.IsLetter)
+                || !appId.Substring(3, 3).All(char.IsLetter)
+                || !appId.Substring(7, 2).All(char.IsDigit)
+                || !appId.Substring(10, 9).All(char.IsDigit))
+                throw new BusinessRuleException("Invalid Application ID"); 
+            var result = await
+                _repository.GetBeneficiaryGovtEmpPenByAppIdAsync(appId);
+            if (result == null || !result.Any())
+                throw new NotFoundException("Beneficiary not found");
+            return result;
+        }
+
+    /// <summary>
+    /// Retrieves all beneficiary authentication details using the provided Mobile no
+    /// after validating its format.
+    /// </summary>
+    /// <param name="mobNumber">Mobile no. of Primary beneficiary</param>
+    /// <returns>
+    /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+    /// </returns>
+        public async Task<List<AllBeneficiaryAuthenticationResponseByMobileNo>>
+        GetAllBeneficiaryByMobileAsync(string mobNumber)
+        {
+            if (string.IsNullOrWhiteSpace(mobNumber))
+                throw new BusinessRuleException("Mobile number is required");
+            if (mobNumber.Length != 10 || !mobNumber.All(char.IsDigit))
+                throw new BusinessRuleException("Invalid mobile number");
+            var result = await
+                _repository.GetAllBeneficiaryByMobileAsync(mobNumber);
+            if (result == null || !result.Any())
+                throw new NotFoundException("Beneficiary not found");
+            return result;
+        }
         
     }
 }

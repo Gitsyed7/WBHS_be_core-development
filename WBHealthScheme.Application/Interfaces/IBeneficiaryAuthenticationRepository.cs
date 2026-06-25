@@ -1,24 +1,93 @@
-﻿using WBHealthScheme.Application.Dtos;
+﻿using WBHealthScheme.Application.dtos;
+using WBHealthScheme.Application.Dtos;
 namespace WBHealthScheme.Application.Interfaces
 {
     public interface IBeneficiaryAuthenticationRepository
     {
-        Task<List<BeneficiaryAuthenticationResponse>>
-        GetBeneficiaryByMobileAsync(string mobileNumber);
+        ///Task<List<BeneficiaryAuthenticationResponse>>
+        ///GetBeneficiaryByMobileAsync(string mobileNumber);
 
-        Task<List<Beneiciary_ward_resp_broto>>
-        GetwardByappAsync(string app_ID);
+        /// <summary>
+        /// Retrieves ward details associated with the provided application ID.
+        /// </summary>
+        /// <param name="HrmsId">HRMS identifier</param>
+        /// <returns>
+        /// A list of BeneficiaryWardRespBroto containing ward details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when HrmsId is null or empty</exception>
+      Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryByHrmsIdGovtAsync(string HrmsId);
+
+        /// <summary>
+        /// Retrieves beneficiary authentication details using the provided unique ID.
+        /// </summary>
+        /// <param name="uniqueId">Unique identifier of the beneficiary</param>
+        /// <returns>
+        /// A list of UnivBeneficiaryAuthenticationResponse containing beneficiary details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when uniqueId is null or empty</exception>
 
         Task<List<UnivBeneficiaryAuthenticationResponse>>
         GetBeneficiaryByUniqueIdAsync(string uniqueId);
 
+        /// <summary>
+        /// Retrieves college beneficiary authentication details using the provided HRMS ID.
+        /// </summary>
+        /// <param name="hrmsId">HRMS identifier of the beneficiary</param>
+        /// <returns>
+        /// A list of ClgBeneficiaryAuthenticationResponse containing beneficiary details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when hrmsId is null or empty</exception>
+        
         Task<List<ClgBeneficiaryAuthenticationResponse>>
         GetBeneficiaryByHrmsIdClgAsync(string hrmsId);
+
+        /// <summary>
+        /// Retrieves panchayat employee beneficiary authentication details using the provided IOSMS ID.
+        /// </summary>
+        /// <param name="iosmsId">IOSMS identifier of the beneficiary</param>
+        /// <returns>
+        /// A list of PnhytEmpBeneficiaryAuthenticationResponse containing beneficiary details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when iosmsId is null or empty</exception>
 
         Task<List<PnhytEmpBeneficiaryAuthenticationResponse>>
         GetBeneficiaryByIosmsIdAsync(string iosmsId);
 
+        /// <summary>
+        /// Retrieves panchayat pension beneficiary authentication details using the provided application ID.
+        /// </summary>
+        /// <param name="appId">Application identifier of the beneficiary</param>
+        /// <returns>
+        /// A list of PnhytPenBeneficiaryAuthenticationResponse containing beneficiary details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when appId is null or empty</exception>
+
         Task<List<PnhytPenBeneficiaryAuthenticationResponse>>
         GetBeneficiaryPnhytPenByAppIdAsync(string appId);
+
+        /// <summary>
+        /// Retrieves employee pension beneficiary authentication details using the provided application ID.
+        /// </summary>
+        /// <param name="appId">Application identifier of the beneficiary</param>
+        /// <returns>
+        /// A list of EmpPenBeneficiaryAuthenticationResponse containing beneficiary details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when appId is null or empty</exception>
+
+        Task<List<GovtEmpPenBeneficiaryAuthenticationResponse>>
+        GetBeneficiaryGovtEmpPenByAppIdAsync(string appId);
+
+        /// <summary>
+        /// Retrieves all beneficiary authentication details associated with the provided mobile number.
+        /// </summary>
+        /// <param name="mobNumber">Mobile number of the beneficiary</param>
+        /// <returns>
+        /// A list of AllBeneficiaryAuthenticationResponseByMobileNo containing beneficiary details
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown when mobNumber is null, empty, or invalid</exception>
+
+        Task<List<AllBeneficiaryAuthenticationResponseByMobileNo>>
+        GetAllBeneficiaryByMobileAsync(string mobNumber);
     }
 }

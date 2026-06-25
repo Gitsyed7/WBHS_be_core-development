@@ -62,7 +62,10 @@ builder.Services.AddScoped<IEmployeeRegistrationService, EmployeeRegistrationSer
 builder.Services.AddScoped<IDdoVerificationService, DdoVerificationService>();
 builder.Services.AddScoped<IHooVerificationService, HooVerificationService>();
 
-
+//API
+builder.Services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
+builder.Services.AddScoped<IApiKeyService, ApiKeyService>();
+builder.Services.AddScoped<EncryptionService>();
 
 builder.Services.AddScoped<IBeneficiaryAuthenticationRepository,
 BeneficiaryAuthenticationRepository>();
