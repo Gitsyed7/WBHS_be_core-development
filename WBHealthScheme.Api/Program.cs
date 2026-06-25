@@ -72,6 +72,9 @@ BeneficiaryAuthenticationService>();
 builder.Services.AddScoped<IRatelistReturnRepository, RateListReturnRepository>();
 builder.Services.AddScoped<IRatelistReturnService, RatelistReturnService>();
 
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<INewsService, NewsService>();
+
 var app = builder.Build();
 
 // Global Exception

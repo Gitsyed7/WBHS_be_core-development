@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 using WBHealthScheme.Application.Dtos;
 using WBHealthScheme.Application.Interfaces;
 using WBHealthScheme.Infrastructure.Persistence;
-using Microsoft.Data.SqlClient;
+//using Microsoft.Data.SqlClient;
 
 namespace WBHealthScheme.Infrastructure.Repositories
 {
