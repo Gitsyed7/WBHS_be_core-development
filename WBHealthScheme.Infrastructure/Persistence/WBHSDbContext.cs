@@ -25,6 +25,8 @@ public class WBHSDbContext : DbContext
     public DbSet<UnivOfficeDetails> UnivOfficeDetails { get; set; }
     public DbSet<UnivfamilyDetails> UnivfamilyDetails { get; set; }
     public DbSet<WbhsFamilyPhotoSignature> WbhsFamilyPhotoSignatures { get; set; }
+    public DbSet<WbhsNews> WbhsNews { get; set; }
+    public DbSet<ApiKey> ApiKeys { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
