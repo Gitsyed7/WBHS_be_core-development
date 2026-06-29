@@ -25,8 +25,6 @@ public class WBHSDbContext : DbContext
     public DbSet<UnivOfficeDetails> UnivOfficeDetails { get; set; }
     public DbSet<UnivfamilyDetails> UnivfamilyDetails { get; set; }
     public DbSet<WbhsFamilyPhotoSignature> WbhsFamilyPhotoSignatures { get; set; }
-    public DbSet<ApiKey> ApiKeys { get; set; }
-    public object GovtPenBeneficiaryFetchAppid { get; internal set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -400,5 +398,31 @@ public class WBHSDbContext : DbContext
             .HasColumnName("api_secret_encrypted");
     }); 
 
+        modelBuilder.Entity<WbhsNews>(entity =>
+{
+    entity.ToTable("wbhs_news", "dbo");
+
+    entity.HasKey(e => e.Id);
+
+    entity.Property(e => e.Id)
+        .HasColumnName("id")
+        .HasMaxLength(50)
+        .IsRequired();
+
+    entity.Property(e => e.Title)
+        .HasColumnName("title");
+
+    entity.Property(e => e.Description)
+        .HasColumnName("description");
+
+    entity.Property(e => e.OrderDate)
+        .HasColumnName("order_date");
+
+    entity.Property(e => e.UpDate)
+        .HasColumnName("up_date");
+
+    entity.Property(e => e.FilePath)
+        .HasColumnName("file_path");
+});
     }
 }
