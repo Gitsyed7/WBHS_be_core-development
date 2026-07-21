@@ -20,6 +20,7 @@ namespace WBHealthScheme.Infrastructure.Repositories
                 .OrderByDescending(x => x.OrderDate)
                 .Select(x => new WbhsNewsDto
                 {
+                    Id =x.Id,
                     Title = x.Title,
                     Description = x.Description,
                     FilePath = x.FilePath

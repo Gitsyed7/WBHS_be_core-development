@@ -88,6 +88,9 @@ builder.Services.AddScoped<IRatelistReturnService, RatelistReturnService>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<INewsService, NewsService>();
 
+builder.Services.AddScoped<ICollegeRegistrationRepository, CollegeRegistrationRepository>();
+builder.Services.AddScoped<ICollegeRegistrationService, CollegeRegistrationService>();
+
 var app = builder.Build();
 
 // Global Exception
