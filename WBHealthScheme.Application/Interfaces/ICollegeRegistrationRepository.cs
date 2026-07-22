@@ -4,7 +4,7 @@ namespace WBHealthScheme.Application.Interfaces
 {
 public interface ICollegeRegistrationRepository
 {
-    Task<CheckHRMSResponse>
+    Task<CheckHRMSDbResponse?>
       CheckHRMSAsync
       (
       CheckHRMSRequest request

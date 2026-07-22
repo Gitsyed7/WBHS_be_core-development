@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WBHealthScheme.Application.Dtos;
 using WBHealthScheme.Application.Interfaces;
 using WBHealthScheme.Infrastructure.Persistence;
+using Microsoft.Data.SqlClient;
 
 namespace WBHealthScheme.Infrastructure.Repositories
 {
@@ -13,14 +14,28 @@ namespace WBHealthScheme.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<CheckHRMSResponse>
-CheckHRMSAsync
-(
-      CheckHRMSRequest request
-)
+        public async Task<CheckHRMSDbResponse?>
+CheckHRMSAsync(CheckHRMSRequest request)
 {
-      throw new NotImplementedException();
-}
+    var hrmsParam =
+      new SqlParameter
+      (
+            "@hrms_id",
+            request.HRMSId
+      );
+      
+      var result =
+    await _context
+        .CheckHRMSDbResponses
+        .FromSqlRaw(
+            "EXEC GET_AVAILABILITY_MBUCT_HRMS_ID_ONLINE_CLG_BY_hrmsID @hrms_id",
+            hrmsParam)
+        .ToListAsync();
 
+var dbResult = result.FirstOrDefault();
+return dbResult;
+      //throw new NotImplementedException();
+      //return new CheckHRMSResponse();
+}
     }
 }

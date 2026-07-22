@@ -7,3 +7,4 @@ public class CheckHRMSResponse
 
     public bool IsSuccess { get; set; }
 }
+

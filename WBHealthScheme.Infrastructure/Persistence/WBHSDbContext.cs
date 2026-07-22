@@ -27,6 +27,7 @@ public class WBHSDbContext : DbContext
     public DbSet<WbhsFamilyPhotoSignature> WbhsFamilyPhotoSignatures { get; set; }
     public DbSet<WbhsNews> WbhsNews { get; set; }
     public DbSet<ApiKey> ApiKeys { get; set; }
+    public DbSet<CheckHRMSDbResponse> CheckHRMSDbResponses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -426,5 +427,8 @@ public class WBHSDbContext : DbContext
     entity.Property(e => e.FilePath)
         .HasColumnName("file_path");
 });
+modelBuilder
+    .Entity<CheckHRMSDbResponse>()
+    .HasNoKey();
     }
 }
