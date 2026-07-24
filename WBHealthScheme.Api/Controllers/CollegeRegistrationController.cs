@@ -20,11 +20,19 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
             _service = service; // local variable calls service
         }
 
-        [HttpPost]
+        [HttpPost("check-hrms")]
         public async Task<IActionResult> CheckHRMS(CheckHRMSRequest request) // not 100% sure about this line
         {
             var result = await _service.CheckHRMSAsync(request); // I thought this will call CheckHRMSAsync but it gives error
 
+            return Ok(result);
+        }
+        
+        [HttpPost("save-college-registration")]
+        public async Task<IActionResult> SaveCollegeRegistration(SaveCollegeRegistrationRequest request)
+        {
+            request.IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var result = await _service.SaveCollegeRegistrationAsync(request);
             return Ok(result);
         }
     }

@@ -9,5 +9,10 @@ public interface ICollegeRegistrationService
       (
       CheckHRMSRequest request
       );
+
+      Task<SaveCollegeRegistrationResponse>
+      SaveCollegeRegistrationAsync(
+        SaveCollegeRegistrationRequest request
+      );
 }
 }

@@ -33,7 +33,7 @@ CheckHRMSAsync
 {
     return new CheckHRMSResponse
     {
-        Message = "Fresh Enrollment.",
+        Message = "No previous enrolment found. Enter your DOB and register ",
         IsSuccess = true
     };
 }
@@ -43,7 +43,7 @@ if (result.IS_EXISTS == "0")
     {
         ApplicationId = result.APP_ID,
         Status = result.IS_EXISTS,
-        Message = "Continue Enrollment.",
+        Message = "HRMS ID already registered. Please Complete Enrollment.",
         IsSuccess = true
     };
 }
@@ -53,7 +53,7 @@ if (result.IS_EXISTS == "1")
     {
         ApplicationId = result.APP_ID,
         Status = result.IS_EXISTS,
-        Message = "Application Submitted.",
+        Message = "Application Submitted and await on verification.",
         IsSuccess = true
     };
 }
@@ -63,7 +63,7 @@ if (result.IS_EXISTS == "2")
     {
         ApplicationId = result.APP_ID,
         Status = result.IS_EXISTS,
-        Message = "Application Verified.",
+        Message = "Application Verified. Collect your certificate from concerned authority.",
         IsSuccess = true
     };
 }
@@ -73,7 +73,7 @@ if(result.IS_EXISTS=="3")
     {
         ApplicationId = result.APP_ID,
         Status = result.IS_EXISTS,
-        Message = "Application Rejected.",
+        Message = "Application Rejected. You can re-apply.",
         IsSuccess = true
     };
 }
@@ -84,7 +84,7 @@ if (result.IS_EXISTS == "4")
     {
         ApplicationId = result.APP_ID,
         Status = result.IS_EXISTS,
-        Message = "Opted out of WBHS.",
+        Message = "You Opted out of WBHS. Kindly Contact your concerned authority.",
         IsSuccess = true
     };
 }
@@ -95,7 +95,7 @@ if (result.IS_EXISTS == "5")
     {
         ApplicationId = result.APP_ID,
         Status = result.IS_EXISTS,
-        Message = "Enrolment terminated.",
+        Message = "Your Enrolment terminated. Kindly Contact your concerned authority.",
         IsSuccess = true
     };
 }
@@ -105,7 +105,40 @@ if (result.IS_EXISTS == "5")
         IsSuccess = false
     };
 }
+public async Task<SaveCollegeRegistrationResponse>
+    SaveCollegeRegistrationAsync(
+        SaveCollegeRegistrationRequest request)
+    {
+        var dateNow =
+            DateTime.Now
+        .ToString("yyyyMMddHHmmssfff");
 
+        var slrNo =
+            request.HRMSId + dateNow;
+
+        var appId =
+            request.HRMSId +
+            request.DOB
+            .ToString("ddMMyyyy");
+
+        var createIp ="0.0.0.0";
+        
+        var result =
+        await _repository
+            .SaveCollegeRegistrationAsync(
+                request,
+                slrNo,
+                appId,
+                createIp);
+
+
+        return new SaveCollegeRegistrationResponse()
+        {
+            ApplicationId = appId,
+            Message = "Application Generated Successfully. Please continue to enrolment.",
+            IsSuccess = true
+        };
+    }
 
 }
 

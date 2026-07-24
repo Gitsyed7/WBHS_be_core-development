@@ -24,5 +24,4 @@
     <Folder Include="Attributes\" />
     <Folder Include="Security\" />
   </ItemGroup>
-
 </Project>

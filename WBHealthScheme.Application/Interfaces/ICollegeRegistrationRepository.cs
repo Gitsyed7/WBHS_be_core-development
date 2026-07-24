@@ -9,5 +9,12 @@ public interface ICollegeRegistrationRepository
       (
       CheckHRMSRequest request
       );
+    Task<bool>
+    SaveCollegeRegistrationAsync(
+        SaveCollegeRegistrationRequest request,
+        string slrNo,
+        string appId,
+        string createIp
+    );
 }
 }

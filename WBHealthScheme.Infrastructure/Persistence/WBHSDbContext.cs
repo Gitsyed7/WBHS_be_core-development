@@ -28,7 +28,6 @@ public class WBHSDbContext : DbContext
     public DbSet<WbhsNews> WbhsNews { get; set; }
     public DbSet<ApiKey> ApiKeys { get; set; }
     public DbSet<CheckHRMSDbResponse> CheckHRMSDbResponses { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
