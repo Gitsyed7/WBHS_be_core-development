@@ -115,7 +115,7 @@ public async Task<SaveCollegeRegistrationResponse>
 
         var slrNo =
             request.HRMSId + dateNow;
-
+        
         var appId =
             request.HRMSId +
             request.DOB
