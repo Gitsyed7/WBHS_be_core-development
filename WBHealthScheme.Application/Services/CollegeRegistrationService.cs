@@ -33,7 +33,7 @@ CheckHRMSAsync
 {
     return new CheckHRMSResponse
     {
-        Message = "No previous enrolment found. Enter your DOB and register ",
+        Message = "No previous enrolment found. Enter your DOB and register application. ",
         IsSuccess = true
     };
 }
@@ -42,6 +42,8 @@ if (result.IS_EXISTS == "0")
     return new CheckHRMSResponse
     {
         ApplicationId = result.APP_ID,
+        SlrNo =result.SLR_NO,
+        Dob = DateOnly.Parse(result.DOB),
         Status = result.IS_EXISTS,
         Message = "HRMS ID already registered. Please Complete Enrollment.",
         IsSuccess = true
@@ -135,6 +137,8 @@ public async Task<SaveCollegeRegistrationResponse>
         return new SaveCollegeRegistrationResponse()
         {
             ApplicationId = appId,
+            SlrNo = slrNo,
+            Dob = request.DOB,
             Message = "Application Generated Successfully. Please continue to enrolment.",
             IsSuccess = true
         };
