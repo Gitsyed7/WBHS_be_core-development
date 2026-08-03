@@ -144,6 +144,19 @@ public async Task<SaveCollegeRegistrationResponse>
         };
     }
 
+    public async Task<List<GenderDto>> GetGenderAsync()
+{
+    return await _repository.GetGenderAsync();
+}
+public async Task<List<MaritalStatusDto>> GetMaritalStatusAsync()
+{
+    return await _repository.GetMaritalStatusAsync();
+}
+public async Task<List<DistrictDto>> GetDistrictAsync()
+{
+    return await _repository.GetDistrictAsync();
+}
+
 }
 
 }

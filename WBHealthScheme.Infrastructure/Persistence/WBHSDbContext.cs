@@ -28,6 +28,9 @@ public class WBHSDbContext : DbContext
     public DbSet<WbhsNews> WbhsNews { get; set; }
     public DbSet<ApiKey> ApiKeys { get; set; }
     public DbSet<CheckHRMSDbResponse> CheckHRMSDbResponses { get; set; }
+    public DbSet<GenderDto> Genders { get; set; }
+    public DbSet<MaritalStatusDto> MaritalStatuses { get; set; }
+    public DbSet<DistrictDto> Districts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -426,8 +429,15 @@ public class WBHSDbContext : DbContext
     entity.Property(e => e.FilePath)
         .HasColumnName("file_path");
 });
-modelBuilder
-    .Entity<CheckHRMSDbResponse>()
-    .HasNoKey();
+        modelBuilder
+        .Entity<CheckHRMSDbResponse>()
+        .HasNoKey();
+
+    modelBuilder.Entity<GenderDto>().HasNoKey();
+
+    modelBuilder.Entity<MaritalStatusDto>().HasNoKey();
+
+    modelBuilder.Entity<DistrictDto>().HasNoKey();
     }
+    
 }

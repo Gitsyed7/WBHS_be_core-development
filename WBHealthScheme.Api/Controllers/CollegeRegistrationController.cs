@@ -35,5 +35,25 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
             var result = await _service.SaveCollegeRegistrationAsync(request);
             return Ok(result);
         }
+        [HttpGet("gender")]
+        public async Task<IActionResult> GetGender()
+        {
+            var genders = await _service.GetGenderAsync();
+            return Ok(genders);
+        }
+
+        [HttpGet("maritalStatus")]
+        public async Task<IActionResult> GetMaritalStatus()
+        {
+            var maritalStatuses = await _service.GetMaritalStatusAsync();
+            return Ok(maritalStatuses);
+        }
+
+        [HttpGet("district")]
+        public async Task<IActionResult> GetDistrict()
+        {
+            var districts = await _service.GetDistrictAsync();
+            return Ok(districts);
+        }
     }
 }

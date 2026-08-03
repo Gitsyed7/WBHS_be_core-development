@@ -88,5 +88,24 @@ namespace WBHealthScheme.Infrastructure.Repositories
 
             return rowsAffected > 0;
         }
+
+        public async Task<List<GenderDto>> GetGenderAsync()
+        {
+            return await _context.Genders
+                .FromSqlRaw("EXEC GET_GENDER_WBHS")
+                .ToListAsync();
+        }
+        public async Task<List<MaritalStatusDto>> GetMaritalStatusAsync()
+        {
+            return await _context.MaritalStatuses
+                .FromSqlRaw("EXEC GET_MARITAL_STATUS_WBHS")
+                .ToListAsync();
+        }
+        public async Task<List<DistrictDto>> GetDistrictAsync()
+        {
+            return await _context.Districts
+                .FromSqlRaw("EXEC GET_MBUCT_District_list")
+                .ToListAsync();
+        }
     }
 }
