@@ -31,6 +31,8 @@ public class WBHSDbContext : DbContext
     public DbSet<GenderDto> Genders { get; set; }
     public DbSet<MaritalStatusDto> MaritalStatuses { get; set; }
     public DbSet<DistrictDto> Districts { get; set; }
+    public DbSet<IfscDbResponse> IfscDetails { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -438,6 +440,8 @@ public class WBHSDbContext : DbContext
     modelBuilder.Entity<MaritalStatusDto>().HasNoKey();
 
     modelBuilder.Entity<DistrictDto>().HasNoKey();
+
+    modelBuilder.Entity<IfscDbResponse>().HasNoKey();
     }
     
 }

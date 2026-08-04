@@ -91,6 +91,9 @@ builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<ICollegeRegistrationRepository, CollegeRegistrationRepository>();
 builder.Services.AddScoped<ICollegeRegistrationService, CollegeRegistrationService>();
 
+builder.Services.AddScoped<IIfscService, IfscService>();
+builder.Services.AddScoped<IIfscRepository, IfscRepository>();
+
 var app = builder.Build();
 
 // Global Exception
