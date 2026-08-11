@@ -161,9 +161,9 @@ namespace WBHealthScheme.Application.Services
             SavePersonalInformationRequest request)
         {
             DateTime dob = DateTime.ParseExact(
-                request.Dob!,
-                "dd/MM/yyyy",
-                CultureInfo.InvariantCulture);
+            request.Dob!,
+            "yyyy-MM-dd",
+            CultureInfo.InvariantCulture);
 
             int retirementAge = Convert.ToInt32(
                 request.RetirementAge);

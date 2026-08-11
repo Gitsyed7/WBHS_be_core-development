@@ -120,9 +120,9 @@ namespace WBHealthScheme.Infrastructure.Repositories
 
         new SqlParameter("@hrms_id", request.HrmsId),
 
-        new SqlParameter("@clg_fnm", request.FirstName),
+        new SqlParameter("@clg_fnm", request.FirstName?.Trim().ToUpperInvariant()),
 
-        new SqlParameter("@clg_lnm", request.LastName),
+        new SqlParameter("@clg_lnm", request.LastName?.Trim().ToUpperInvariant()),
 
         new SqlParameter(
             "@clg_dob",
@@ -165,7 +165,7 @@ namespace WBHealthScheme.Infrastructure.Repositories
             string.IsNullOrWhiteSpace(
                 request.ResidencePhoneNo)
                 ? DBNull.Value
-                : request.ResidencePhoneNo),
+                : request.ResidencePhoneNo?.Trim().ToUpperInvariant()),
 
         new SqlParameter(
             "@retire_age_yr",
