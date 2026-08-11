@@ -17,5 +17,8 @@ namespace WBHealthScheme.Application.Interfaces
         Task<List<GenderDto>> GetGenderAsync();
         Task<List<MaritalStatusDto>> GetMaritalStatusAsync();
         Task<List<DistrictDto>> GetDistrictAsync();
+
+        Task SavePersonalInformationAsync(
+        SavePersonalInformationRequest request);
   }
 }

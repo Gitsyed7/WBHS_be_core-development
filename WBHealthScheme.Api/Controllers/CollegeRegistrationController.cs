@@ -8,13 +8,13 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
     [Route("api/[controller]")] //dont understand
 
     //CollegeRegistrationController is inheriting everything from ControllerBase
-    public class CollegeRegistrationController : ControllerBase 
-    
+    public class CollegeRegistrationController : ControllerBase
+
     {
-        private readonly ICollegeRegistrationService _service; 
+        private readonly ICollegeRegistrationService _service;
         //Variable declaration of class ICollegeRegistrationService
 
-        public CollegeRegistrationController(ICollegeRegistrationService service) 
+        public CollegeRegistrationController(ICollegeRegistrationService service)
         // controller calling for providing an implementation of ICollegeRegistrationService || Dependency Injection
         {
             _service = service; // local variable calls service
@@ -27,7 +27,7 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
 
             return Ok(result);
         }
-        
+
         [HttpPost("save-college-registration")]
         public async Task<IActionResult> SaveCollegeRegistration(SaveCollegeRegistrationRequest request)
         {
@@ -54,6 +54,18 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
         {
             var districts = await _service.GetDistrictAsync();
             return Ok(districts);
+        }
+
+        [HttpPost("save-personal-information")]
+        public async Task<IActionResult> SavePersonalInformation(
+    [FromBody] SavePersonalInformationRequest request)
+        {
+            await _service.SavePersonalInformationAsync(request);
+
+            return Ok(new
+            {
+                message = "Personal information saved successfully."
+            });
         }
     }
 }

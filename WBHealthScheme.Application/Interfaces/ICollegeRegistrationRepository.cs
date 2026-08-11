@@ -16,8 +16,15 @@ namespace WBHealthScheme.Application.Interfaces
             string appId,
             string createIp
         );
+        
         Task<List<GenderDto>> GetGenderAsync();
         Task<List<MaritalStatusDto>> GetMaritalStatusAsync();
         Task<List<DistrictDto>> GetDistrictAsync();
+//Save Personal Details
+        Task SavePersonalInformationAsync(
+    SavePersonalInformationRequest request,
+    DateTime retirementDate,
+    string isExists);
+        
     }
 }
