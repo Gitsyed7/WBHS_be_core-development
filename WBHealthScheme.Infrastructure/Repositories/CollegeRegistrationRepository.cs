@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using WBHealthScheme.Application.Dtos;
 using WBHealthScheme.Application.Interfaces;
 using WBHealthScheme.Infrastructure.Persistence;
+using System.Globalization;
 
 namespace WBHealthScheme.Infrastructure.Repositories
 {
@@ -16,6 +17,8 @@ namespace WBHealthScheme.Infrastructure.Repositories
         {
             _context = context;
         }
+
+        #region Get HRMS State
 
         public async Task<CheckHRMSDbResponse?>
         CheckHRMSAsync(
@@ -36,6 +39,9 @@ namespace WBHealthScheme.Infrastructure.Repositories
 
             return result.FirstOrDefault();
         }
+        #endregion
+
+        #region Save Registration
 
         public async Task<bool>
         SaveCollegeRegistrationAsync(
@@ -89,6 +95,10 @@ namespace WBHealthScheme.Infrastructure.Repositories
             return rowsAffected > 0;
         }
 
+        #endregion
+
+        #region Get Dropdown of Personal
+
         public async Task<List<GenderDto>> GetGenderAsync()
         {
             return await _context.Genders
@@ -107,13 +117,17 @@ namespace WBHealthScheme.Infrastructure.Repositories
                 .FromSqlRaw("EXEC GET_MBUCT_District_list")
                 .ToListAsync();
         }
+
+        #endregion
+
+        #region  Save Personal Data
         public async Task SavePersonalInformationAsync(
     SavePersonalInformationRequest request,
     DateTime retirementDate,
     string isExists)
-{
-    var parameters = new[]
-    {
+        {
+            var parameters = new[]
+            {
         new SqlParameter("@slr_no", request.SlrNo),
 
         new SqlParameter("@app_id", request.AppId),
@@ -126,7 +140,15 @@ namespace WBHealthScheme.Infrastructure.Repositories
 
         new SqlParameter(
             "@clg_dob",
-            request.Dob),
+            DateTime.ParseExact(
+            request.Dob!,
+            "yyyy-MM-dd",
+            CultureInfo.InvariantCulture
+            ).ToString("dd/MM/yyyy")),
+
+        new SqlParameter(
+            "@redate",
+            retirementDate.ToString("dd/MM/yyyy")),
 
         new SqlParameter(
             "@mt_stat",
@@ -141,8 +163,7 @@ namespace WBHealthScheme.Infrastructure.Repositories
             request.DistrictCode),
 
         new SqlParameter(
-            "@addr",
-            request.Address),
+            "@addr",request.Address?.Trim().ToUpperInvariant()),
 
         new SqlParameter(
             "@id_prf",
@@ -165,7 +186,7 @@ namespace WBHealthScheme.Infrastructure.Repositories
             string.IsNullOrWhiteSpace(
                 request.ResidencePhoneNo)
                 ? DBNull.Value
-                : request.ResidencePhoneNo?.Trim().ToUpperInvariant()),
+                : request.ResidencePhoneNo),
 
         new SqlParameter(
             "@retire_age_yr",
@@ -204,34 +225,68 @@ namespace WBHealthScheme.Infrastructure.Repositories
             isExists)
     };
 
-    await _context.Database
-        .ExecuteSqlRawAsync(
-            "EXEC INSERT_mbuct_clgBasicInfo_online " +
-            "@slr_no," +
-            "@app_id," +
-            "@hrms_id," +
-            "@clg_fnm," +
-            "@clg_lnm," +
-            "@clg_dob," +
-            "@mt_stat," +
-            "@gen," +
-            "@dist_cd," +
-            "@addr," +
-            "@id_prf," +
-            "@aadhaar_no," +
-            "@mob_no," +
-            "@email_id," +
-            "@ph_no," +
-            "@retire_age_yr," +
-            "@redate," +
-            "@bnk_ifsc," +
-            "@bnk_nm," +
-            "@bnk_br_nm," +
-            "@bnk_micr," +
-            "@bnk_acno," +
-            "@id_type," +
-            "@is_exists",
-            parameters);
+            await _context.Database
+                .ExecuteSqlRawAsync(
+                    "EXEC INSERT_mbuct_clgBasicInfo_online " +
+                    "@slr_no," +
+                    "@app_id," +
+                    "@hrms_id," +
+                    "@clg_fnm," +
+                    "@clg_lnm," +
+                    "@clg_dob," +
+                    "@mt_stat," +
+                    "@gen," +
+                    "@dist_cd," +
+                    "@addr," +
+                    "@id_prf," +
+                    "@aadhaar_no," +
+                    "@mob_no," +
+                    "@email_id," +
+                    "@ph_no," +
+                    "@retire_age_yr," +
+                    "@redate," +
+                    "@bnk_ifsc," +
+                    "@bnk_nm," +
+                    "@bnk_br_nm," +
+                    "@bnk_micr," +
+                    "@bnk_acno," +
+                    "@id_type," +
+                    "@is_exists",
+                    parameters);
+        }
+        #endregion
+
+        #region Get Personal Data
+
+        public async Task<ClgPersonalFetchResponse?>
+    GetPersonalInformationAsync(
+        ClgPersonalFetchRequest request)
+{
+    var parameters = new[]
+    {
+        new SqlParameter(
+            "@app_id",
+            request.AppId),
+
+        new SqlParameter(
+            "@hrms_id",
+            request.HrmsId)
+    };
+
+    var result =
+        await _context
+            .ClgPersonalFetchResponses
+            .FromSqlRaw(
+                "EXEC GET_MBUCT_College_BasicInfo_Online_Existing " +
+                "@app_id, " +
+                "@hrms_id",
+                parameters)
+            .ToListAsync();
+
+    return result.FirstOrDefault();
 }
+
+        #endregion
+
     }
 }

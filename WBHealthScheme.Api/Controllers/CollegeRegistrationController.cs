@@ -9,7 +9,6 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
 
     //CollegeRegistrationController is inheriting everything from ControllerBase
     public class CollegeRegistrationController : ControllerBase
-
     {
         private readonly ICollegeRegistrationService _service;
         //Variable declaration of class ICollegeRegistrationService
@@ -20,6 +19,8 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
             _service = service; // local variable calls service
         }
 
+        #region check-hrms
+
         [HttpPost("check-hrms")]
         public async Task<IActionResult> CheckHRMS(CheckHRMSRequest request) // not 100% sure about this line
         {
@@ -28,6 +29,10 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
             return Ok(result);
         }
 
+        #endregion
+
+        #region save-college-registration
+
         [HttpPost("save-college-registration")]
         public async Task<IActionResult> SaveCollegeRegistration(SaveCollegeRegistrationRequest request)
         {
@@ -35,6 +40,11 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
             var result = await _service.SaveCollegeRegistrationAsync(request);
             return Ok(result);
         }
+
+        #endregion
+
+        #region get-personal-dropdown
+
         [HttpGet("gender")]
         public async Task<IActionResult> GetGender()
         {
@@ -56,6 +66,10 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
             return Ok(districts);
         }
 
+        #endregion
+
+        #region save-personal-information
+
         [HttpPost("save-personal-information")]
         public async Task<IActionResult> SavePersonalInformation(
     [FromBody] SavePersonalInformationRequest request)
@@ -67,5 +81,28 @@ namespace WBHealthScheme.Api.Controllers // namespace calling
                 message = "Personal information saved successfully."
             });
         }
+
+        #endregion
+
+        #region get-personal-information
+
+        [HttpPost("get-personal-information")]
+        public async Task<IActionResult> GetPersonalInformation(
+    ClgPersonalFetchRequest request)
+        {
+            var result =
+                await _service.GetPersonalInformationAsync(request);
+
+            if (result == null)
+            {
+                return NotFound("Personal information not found.");
+            }
+
+            return Ok(result);
+        }
+
+        #endregion
+
+
     }
 }

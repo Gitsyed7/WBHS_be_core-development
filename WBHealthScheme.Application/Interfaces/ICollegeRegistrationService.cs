@@ -20,5 +20,12 @@ namespace WBHealthScheme.Application.Interfaces
 
         Task SavePersonalInformationAsync(
         SavePersonalInformationRequest request);
+
+        //Get Personal Form
+
+    Task<ClgPersonalFetchResponse?>
+    GetPersonalInformationAsync(ClgPersonalFetchRequest request);
+        
+    
   }
 }

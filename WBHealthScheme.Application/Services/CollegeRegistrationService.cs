@@ -7,10 +7,7 @@ namespace WBHealthScheme.Application.Services
 
     public class CollegeRegistrationService : ICollegeRegistrationService
     {
-
         private readonly ICollegeRegistrationRepository _repository;
-
-
         public CollegeRegistrationService
         (
               ICollegeRegistrationRepository repository
@@ -19,7 +16,7 @@ namespace WBHealthScheme.Application.Services
             _repository = repository;
         }
 
-
+        #region Check HRMS State
         public async Task<CheckHRMSResponse>
         CheckHRMSAsync
         (
@@ -108,6 +105,10 @@ namespace WBHealthScheme.Application.Services
                 IsSuccess = false
             };
         }
+        #endregion
+
+        #region Save Registration
+
         public async Task<SaveCollegeRegistrationResponse>
             SaveCollegeRegistrationAsync(
                 SaveCollegeRegistrationRequest request)
@@ -144,7 +145,9 @@ namespace WBHealthScheme.Application.Services
                 IsSuccess = true
             };
         }
+        #endregion
 
+        #region Get Personal Dropdown
         public async Task<List<GenderDto>> GetGenderAsync()
         {
             return await _repository.GetGenderAsync();
@@ -157,6 +160,10 @@ namespace WBHealthScheme.Application.Services
         {
             return await _repository.GetDistrictAsync();
         }
+
+        #endregion
+        
+        #region Save Personal Data
         public async Task SavePersonalInformationAsync(
             SavePersonalInformationRequest request)
         {
@@ -164,7 +171,7 @@ namespace WBHealthScheme.Application.Services
             request.Dob!,
             "yyyy-MM-dd",
             CultureInfo.InvariantCulture);
-
+            
             int retirementAge = Convert.ToInt32(
                 request.RetirementAge);
 
@@ -186,6 +193,21 @@ namespace WBHealthScheme.Application.Services
                 retirementDate,
                 isExists);
         }
+
+        #endregion
+
+        #region Get Personal Data
+
+        public async Task<ClgPersonalFetchResponse?>
+        GetPersonalInformationAsync(
+            ClgPersonalFetchRequest request)
+        {
+            return await _repository
+            .GetPersonalInformationAsync(request);
+        }
+
+        #endregion
+
     }
 
 }

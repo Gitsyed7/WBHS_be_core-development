@@ -10,7 +10,7 @@ public class WBHSDbContext : DbContext
     public WBHSDbContext(DbContextOptions<WBHSDbContext> options) : base(options) { }
 
     public DbSet<BeneficiaryWardRespBroto> BenefWardDetails { get; set; }
-    
+
     public DbSet<ReturnRatelistResponse> CodeDetails { get; set; }
     public DbSet<GovtEmpPenBeneficiaryAuthenticationResponse> GovtEmpPenBeneficiaryFetchAppid { get; set; }
     public DbSet<WbhsApplicationIdEmpOnline> EmployeeApplications => Set<WbhsApplicationIdEmpOnline>();
@@ -32,6 +32,7 @@ public class WBHSDbContext : DbContext
     public DbSet<MaritalStatusDto> MaritalStatuses { get; set; }
     public DbSet<DistrictDto> Districts { get; set; }
     public DbSet<IfscDbResponse> IfscDetails { get; set; }
+    public DbSet<ClgPersonalFetchResponse> ClgPersonalFetchResponses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -222,18 +223,18 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.EmpLastName).HasColumnName("empLastName").HasMaxLength(100);
         });
 
-    /// <summary>
-    /// Configures the UnivAppIdOnline entity and maps it to the database table.
-    /// </summary>
+        /// <summary>
+        /// Configures the UnivAppIdOnline entity and maps it to the database table.
+        /// </summary>
         modelBuilder.Entity<UnivAppIdOnline>(entity =>
         {
-        /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
+            /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
             entity.ToTable("MBUCT_AppId_Univ_ONLINE", "dbo");
 
-        /// Define primary key    
+            /// Define primary key    
             entity.HasKey(e => e.SlrNo);
 
-        /// Configure properties and column mappings
+            /// Configure properties and column mappings
             entity.Property(e => e.SlrNo).HasColumnName("SLR_NO").HasMaxLength(200).IsRequired();
             entity.Property(e => e.PanId).HasColumnName("PAN_ID").HasMaxLength(200).IsRequired();
             entity.Property(e => e.AppId).HasColumnName("APP_ID").HasMaxLength(200).IsRequired();
@@ -245,18 +246,18 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.CreatTime).HasColumnName("CR_TIME").IsRequired();
         });
 
-    /// <summary>
-    /// Configures the UnivBasicInfo entity and maps it to the database table.
-    /// </summary>
+        /// <summary>
+        /// Configures the UnivBasicInfo entity and maps it to the database table.
+        /// </summary>
         modelBuilder.Entity<UnivBasicInfo>(entity =>
         {
-        /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
+            /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
             entity.ToTable("MBUCT_univBasicInfo_ONLINE", "dbo");
 
-        /// Define primary key                
+            /// Define primary key                
             entity.HasKey(e => e.SlrNo);
 
-        /// Configure properties and column mappings
+            /// Configure properties and column mappings
             entity.Property(e => e.SlrNo).HasColumnName("SLR_NO").HasMaxLength(200).IsRequired();
             entity.Property(e => e.AppId).HasColumnName("APP_ID").HasMaxLength(200).IsRequired();
             entity.Property(e => e.PanId).HasColumnName("PAN_ID").HasMaxLength(50).IsRequired();
@@ -266,7 +267,7 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.MtsStsCd).HasColumnName("MTS_STS_CD").HasMaxLength(2);
             entity.Property(e => e.Sex).HasColumnName("sex").HasMaxLength(2);
             entity.Property(e => e.EmpDistCd).HasColumnName("EMP_DIST_CD").HasMaxLength(2);
-            entity.Property(e => e.EmpAddr) .HasColumnName("empAddr");
+            entity.Property(e => e.EmpAddr).HasColumnName("empAddr");
             entity.Property(e => e.PanVoterNo).HasColumnName("PAN_VOTER_NO").HasMaxLength(30);
             entity.Property(e => e.MobileNo).HasColumnName("MOBILE_NO").HasMaxLength(10);
             entity.Property(e => e.EmailId).HasColumnName("EMAIL_ID");
@@ -275,7 +276,7 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.BnkNm).HasColumnName("bnk_nm");
             entity.Property(e => e.BnkBrNm).HasColumnName("bnk_br_nm");
             entity.Property(e => e.BnkIfsc).HasColumnName("bnk_ifsc").HasMaxLength(20);
-            entity.Property(e => e.BnkAcNo).HasColumnName("bnk_ac-no"); 
+            entity.Property(e => e.BnkAcNo).HasColumnName("bnk_ac-no");
             entity.Property(e => e.IsExists).HasColumnName("IS_EXISTS").HasMaxLength(1);
             entity.Property(e => e.MemoNo).HasColumnName("Memo_No");
             entity.Property(e => e.MemoDate).HasColumnName("Memo_Date");
@@ -291,18 +292,18 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.AdharNo).HasColumnName("Adhar_No").HasMaxLength(20);
         });
 
-    /// <summary>
-    /// Configures the UnivOfficeDetails entity and maps it to the database table.
-    /// </summary>
+        /// <summary>
+        /// Configures the UnivOfficeDetails entity and maps it to the database table.
+        /// </summary>
         modelBuilder.Entity<UnivOfficeDetails>(entity =>
         {
-        /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
+            /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
             entity.ToTable("MBUCT_Univ_Office_Details", "dbo");
 
-        /// Define primary key
+            /// Define primary key
             entity.HasKey(e => e.SlrNo);
 
-        /// Configure properties and column mappings
+            /// Configure properties and column mappings
             entity.Property(e => e.SlrNo).HasColumnName("SLR_NO").HasMaxLength(200).IsRequired();
             entity.Property(e => e.AppId).HasColumnName("app_id").HasMaxLength(200).IsRequired();
             entity.Property(e => e.PanId).HasColumnName("PAN_ID").HasMaxLength(11).IsRequired();
@@ -328,19 +329,19 @@ public class WBHSDbContext : DbContext
             entity.Property(e => e.WardGpb).HasColumnName("ward_gpb").HasMaxLength(200);
         });
 
-    /// <summary>
-    /// Configures the UnivfamilyDetails entity and maps it to the database table.
-    /// </summary>
+        /// <summary>
+        /// Configures the UnivfamilyDetails entity and maps it to the database table.
+        /// </summary>
 
         modelBuilder.Entity<UnivfamilyDetails>(entity =>
         {
-        /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
+            /// Map to table: MBUCT_AppId_Univ_ONLINE in dbo schema
             entity.ToTable("MBUCT_Univ_familyDetails", "dbo");
 
-        /// Define primary key
+            /// Define primary key
             entity.HasKey(e => e.SlrNo);
 
-        /// Configure properties and column mappings
+            /// Configure properties and column mappings
             entity.Property(e => e.SlrNo).HasColumnName("SLR_NO").HasMaxLength(200).IsRequired();
             entity.Property(e => e.AppId).HasColumnName("APP_ID").HasMaxLength(200).IsRequired();
             entity.Property(e => e.PanId).HasColumnName("PAN_ID").HasMaxLength(200).IsRequired();
@@ -377,33 +378,33 @@ public class WBHSDbContext : DbContext
         });
 
 
-       modelBuilder.Entity<ApiKey>(entity =>
-    {
-        entity.ToTable("API_KEYS");
+        modelBuilder.Entity<ApiKey>(entity =>
+     {
+         entity.ToTable("API_KEYS");
 
-        entity.Property(e => e.Id).HasColumnName("id");
+         entity.Property(e => e.Id).HasColumnName("id");
 
-        entity.Property(e => e.EndpointUrl)
-            .HasColumnName("endpoint_url");
+         entity.Property(e => e.EndpointUrl)
+             .HasColumnName("endpoint_url");
 
-        entity.Property(e => e.AuthHeaderName)
-            .HasColumnName("auth_header_name");
+         entity.Property(e => e.AuthHeaderName)
+             .HasColumnName("auth_header_name");
 
-        entity.Property(e => e.IsActive)
-            .HasColumnName("is_active");
+         entity.Property(e => e.IsActive)
+             .HasColumnName("is_active");
 
-        entity.Property(e => e.CreatedAt)
-            .HasColumnName("created_at");
+         entity.Property(e => e.CreatedAt)
+             .HasColumnName("created_at");
 
-        entity.Property(e => e.UpdatedAt)
-            .HasColumnName("updated_at");
+         entity.Property(e => e.UpdatedAt)
+             .HasColumnName("updated_at");
 
-        entity.Property(e => e.ApiKeyValue)
-            .HasColumnName("api_key");
+         entity.Property(e => e.ApiKeyValue)
+             .HasColumnName("api_key");
 
-        entity.Property(e => e.ApiSecretEncrypted)
-            .HasColumnName("api_secret_encrypted");
-    }); 
+         entity.Property(e => e.ApiSecretEncrypted)
+             .HasColumnName("api_secret_encrypted");
+     });
 
         modelBuilder.Entity<WbhsNews>(entity =>
 {
@@ -435,13 +436,96 @@ public class WBHSDbContext : DbContext
         .Entity<CheckHRMSDbResponse>()
         .HasNoKey();
 
-    modelBuilder.Entity<GenderDto>().HasNoKey();
+        modelBuilder.Entity<GenderDto>().HasNoKey();
 
-    modelBuilder.Entity<MaritalStatusDto>().HasNoKey();
+        modelBuilder.Entity<MaritalStatusDto>().HasNoKey();
 
-    modelBuilder.Entity<DistrictDto>().HasNoKey();
+        modelBuilder.Entity<DistrictDto>().HasNoKey();
 
-    modelBuilder.Entity<IfscDbResponse>().HasNoKey();
+        modelBuilder.Entity<IfscDbResponse>().HasNoKey();
+
+        modelBuilder.Entity<ClgPersonalFetchResponse>(entity =>
+        {
+        entity.HasNoKey();
+
+        entity.Property(x => x.AppId)
+            .HasColumnName("APP_ID");
+
+        entity.Property(x => x.HrmsId)
+            .HasColumnName("HRMS_ID");
+
+        entity.Property(x => x.FirstName)
+            .HasColumnName("CLG_FirstName");
+
+        entity.Property(x => x.LastName)
+            .HasColumnName("CLG_LastName");
+
+        entity.Property(x => x.Dob)
+            .HasColumnName("CLG_Dob");
+
+        entity.Property(x => x.MaritalStatus)
+            .HasColumnName("MTS_STS_CD");
+
+        entity.Property(x => x.Gender)
+            .HasColumnName("sex");
+
+        entity.Property(x => x.DistrictCode)
+            .HasColumnName("EMP_DIST_CD");
+
+        entity.Property(x => x.Address)
+            .HasColumnName("empAddr");
+
+        entity.Property(x => x.IdentityProofNo)
+            .HasColumnName("PAN_VOTER_NO");
+
+        entity.Property(x => x.AadhaarNo)
+            .HasColumnName("Aadhaar_Card_No");
+
+        entity.Property(x => x.MobileNo)
+            .HasColumnName("MOBILE_NO");
+
+        entity.Property(x => x.EmailId)
+            .HasColumnName("EMAIL_ID");
+
+        entity.Property(x => x.ResidencePhoneNo)
+            .HasColumnName("RESIDENCE_PH_NO");
+
+        entity.Property(x => x.RetirementAge)
+            .HasColumnName("Retirement_age");
+
+        entity.Property(x => x.RetirementDate)
+            .HasColumnName("redate");
+
+        entity.Property(x => x.BankName)
+            .HasColumnName("bnk_nm");
+
+        entity.Property(x => x.BankBranchName)
+            .HasColumnName("bnk_br_nm");
+
+        entity.Property(x => x.BankIfsc)
+            .HasColumnName("bnk_ifsc");
+
+        entity.Property(x => x.BankMicr)
+            .HasColumnName("bnk_micr");
+
+        entity.Property(x => x.BankAccountNo)
+            .HasColumnName("bnk_ac-no");
+
+        entity.Property(x => x.IsExists)
+            .HasColumnName("IS_EXISTS");
+
+        entity.Property(x => x.DdoVerifyDate)
+            .HasColumnName("DDO_VERIFY_DATE");
+
+        entity.Property(x => x.DdoRejectDate)
+            .HasColumnName("DDO_reject_date");
+
+        entity.Property(x => x.IdentityProofType)
+            .HasColumnName("id_type");
+        });
+
+
+
     }
-    
+
 }

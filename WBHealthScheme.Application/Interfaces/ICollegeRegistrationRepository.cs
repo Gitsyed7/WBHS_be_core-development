@@ -20,11 +20,18 @@ namespace WBHealthScheme.Application.Interfaces
         Task<List<GenderDto>> GetGenderAsync();
         Task<List<MaritalStatusDto>> GetMaritalStatusAsync();
         Task<List<DistrictDto>> GetDistrictAsync();
+
 //Save Personal Details
-        Task SavePersonalInformationAsync(
+    Task SavePersonalInformationAsync(
     SavePersonalInformationRequest request,
     DateTime retirementDate,
     string isExists);
+
+//Get Personal Form
+
+    Task<ClgPersonalFetchResponse?>
+    GetPersonalInformationAsync(
+        ClgPersonalFetchRequest request);
         
     }
 }
